@@ -3,22 +3,22 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Pokemon } from "../types/pokemon";
 
-// types/pokemon.ts
-export interface Pokemon {
-  name: string;
+interface Props {
+  pokedexId: number;
 }
 
-const PokemonList = () => {
-  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
+const PokemonList = ({ pokedexId }: Props) => {
+  const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
-        const res = await axios.get<Pokemon[]>(
-          "http://localhost:3001/api/pokemon"
+        const res = await axios.get<Pokemon>(
+          `http://localhost:3001/api/pokemon/${pokedexId}`
         );
         setPokemon(res.data);
         setLoading(false);
@@ -33,16 +33,14 @@ const PokemonList = () => {
     };
 
     fetchPokemon();
-  }, []);
+  }, [pokedexId]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error}</div>;
 
   return (
     <ul>
-      {pokemon.map((p) => (
-        <li key={p.name}>{p.name}</li>
-      ))}
+      <>{console.log(pokemon)}</>
     </ul>
   );
 };

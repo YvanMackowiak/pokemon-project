@@ -3,7 +3,7 @@ import PokemonList from "./components/PokemonList";
 export default function Home() {
   return (
     <div>
-      <PokemonList />
+      <PokemonList pokedexId={1} />
     </div>
   );
 }
