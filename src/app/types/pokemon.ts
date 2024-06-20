@@ -71,7 +71,7 @@ export interface Pokemon {
   sprites: Sprites;
   types: Types[] | null;
   talents: Talents[] | null;
-  stats: Stats | null;
+  stats: Stats | undefined;
   resistances: Resistances[] | null;
   evolution: Evolution | null;
   height: string | null;

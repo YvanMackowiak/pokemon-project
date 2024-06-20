@@ -1,4 +1,4 @@
-import PokemonList from "./components/PokemonList";
+import PokemonList from "./components/PokemonCard";
 
 export default function Home() {
   return (
