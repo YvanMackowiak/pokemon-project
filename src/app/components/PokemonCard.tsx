@@ -1,6 +1,3 @@
-// components/PokemonList.tsx
-"use client";
-
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
 import axios from "axios";
 import Image from "next/image";
@@ -48,8 +45,8 @@ const PokemonList = ({ pokedexId }: Props) => {
     <Box
       sx={{
         border: 1,
-        borderRadius: 4,
         borderColor: "grey.500",
+        borderRadius: 4,
         width: 200,
         position: "relative",
         display: "flex",
@@ -68,8 +65,10 @@ const PokemonList = ({ pokedexId }: Props) => {
         <Image
           src={pokemon.sprites.regular}
           alt={pokemon.name.fr}
-          layout="fill"
-          objectFit="contain"
+          fill
+          style={{ objectFit: "contain" }}
+          sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
         />
       </Box>
       <Typography variant="body1">
@@ -85,8 +84,9 @@ const PokemonList = ({ pokedexId }: Props) => {
             <Image
               src={type.image}
               alt={type.name}
-              layout="fill"
-              objectFit="contain"
+              fill
+              style={{ objectFit: "contain" }}
+              sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </Box>
         ))}
