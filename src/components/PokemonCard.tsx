@@ -43,7 +43,7 @@ const PokemonList = ({ pokedexId }: Props) => {
 
   return (
     <Box
-      sx={{
+      sx={(t) => ({
         border: 1,
         borderColor: "grey.500",
         borderRadius: 4,
@@ -53,7 +53,8 @@ const PokemonList = ({ pokedexId }: Props) => {
         flexDirection: "column",
         alignItems: "center",
         p: 2,
-      }}
+        backgroundColor: t.palette.background.paper,
+      })}
     >
       <Box
         sx={{
@@ -91,16 +92,22 @@ const PokemonList = ({ pokedexId }: Props) => {
           </Box>
         ))}
       </Box>
-      <Box sx={{ display: "flex", gap: 1 }}>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Avatar sx={{ width: 15, height: 15 }} src={Female.src} alt="femme" />
-          <Typography variant="body2">{pokemon.sexe?.female}</Typography>
+      {pokemon.sexe && (
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Avatar
+              sx={{ width: 15, height: 15 }}
+              src={Female.src}
+              alt="femme"
+            />
+            <Typography variant="body2">{pokemon.sexe?.female}</Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Avatar sx={{ width: 15, height: 15 }} src={Male.src} alt="homme" />
+            <Typography variant="body2">{pokemon.sexe?.male}</Typography>
+          </Box>
         </Box>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Avatar sx={{ width: 15, height: 15 }} src={Male.src} alt="homme" />
-          <Typography variant="body2">{pokemon.sexe?.male}</Typography>
-        </Box>
-      </Box>
+      )}
     </Box>
   );
 };
