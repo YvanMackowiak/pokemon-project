@@ -1,19 +1,16 @@
 // components/PokemonList.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
 import axios from "axios";
-import { Pokemon, Stats } from "../types/pokemon";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import Female from "../../../public/assets/Female.png";
 import Male from "../../../public/assets/Male.png";
-import Femela from "../../../public/assets/Female.png";
+import { Pokemon } from "../types/pokemon";
 
 interface Props {
   pokedexId: number;
-}
-
-interface StatsProps {
-  stats?: Stats;
 }
 
 const PokemonList = ({ pokedexId }: Props) => {
@@ -42,27 +39,29 @@ const PokemonList = ({ pokedexId }: Props) => {
     fetchPokemon();
   }, [pokedexId]);
 
-  //TODO composant chargement
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching data: {error}</div>;
-  if (!pokemon) return <div>No data</div>;
-  console.log(pokemon);
+  if (loading) return <CircularProgress />;
+  if (error)
+    return <Typography color="error">Error fetching data: {error}</Typography>;
+  if (!pokemon) return <Typography>No data</Typography>;
 
   return (
-    <div
-      style={{
-        border: "1px solid grey",
-        width: "200px",
+    <Box
+      sx={{
+        border: 1,
+        borderRadius: 4,
+        borderColor: "grey.500",
+        width: 200,
         position: "relative",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        p: 2,
       }}
     >
-      <div
-        style={{
-          width: "200px",
-          height: "200px",
+      <Box
+        sx={{
+          width: 200,
+          height: 200,
           position: "relative",
         }}
       >
@@ -72,16 +71,16 @@ const PokemonList = ({ pokedexId }: Props) => {
           layout="fill"
           objectFit="contain"
         />
-      </div>
-      <p>
+      </Box>
+      <Typography variant="body1">
         N°{pokemon.pokedex_id} {pokemon.name.fr}
-      </p>
-      <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
-        <p>Types :</p>
+      </Typography>
+      <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+        <Typography>Types :</Typography>
         {pokemon.types?.map((type) => (
-          <div
+          <Box
             key={type.name}
-            style={{ width: "20px", height: "20px", position: "relative" }}
+            sx={{ width: 20, height: 20, position: "relative" }}
           >
             <Image
               src={type.image}
@@ -89,29 +88,20 @@ const PokemonList = ({ pokedexId }: Props) => {
               layout="fill"
               objectFit="contain"
             />
-          </div>
+          </Box>
         ))}
-      </div>
-      <div style={{ display: "flex", gap: "4px" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <div style={{ width: "15px", height: "15px", position: "relative" }}>
-            <Image
-              src={Femela}
-              alt={"femme"}
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-          {pokemon.sexe?.female}
-        </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <div style={{ width: "15px", height: "15px", position: "relative" }}>
-            <Image src={Male} alt={"homme"} layout="fill" objectFit="contain" />
-          </div>
-          {pokemon.sexe?.male}
-        </div>
-      </div>
-    </div>
+      </Box>
+      <Box sx={{ display: "flex", gap: 1 }}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Avatar sx={{ width: 15, height: 15 }} src={Female.src} alt="femme" />
+          <Typography variant="body2">{pokemon.sexe?.female}</Typography>
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Avatar sx={{ width: 15, height: 15 }} src={Male.src} alt="homme" />
+          <Typography variant="body2">{pokemon.sexe?.male}</Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
