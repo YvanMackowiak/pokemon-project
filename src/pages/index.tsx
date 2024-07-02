@@ -1,5 +1,6 @@
 "use client";
 
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import PokemonList from "../components/PokemonCard";
 import { useRandomPokemonId } from "../hooks/useRandomPokemonId";
@@ -15,8 +16,8 @@ export default function Home() {
   }, [randomNumber]);
 
   return (
-    <div>
+    <Box sx={{}}>
       <PokemonList pokedexId={currentNumber} />
-    </div>
+    </Box>
   );
 }
