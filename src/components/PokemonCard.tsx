@@ -2,8 +2,8 @@ import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Female from "../../../public/assets/Female.png";
-import Male from "../../../public/assets/Male.png";
+import Female from "../../public/assets/Female.png";
+import Male from "../../public/assets/Male.png";
 import { Pokemon } from "../types/pokemon";
 
 interface Props {

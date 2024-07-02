@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import PokemonList from "./components/PokemonCard";
-import { useRandomPokemonId } from "./hooks/useRandomPokemonId";
+import PokemonList from "../components/PokemonCard";
+import { useRandomPokemonId } from "../hooks/useRandomPokemonId";
 
 export default function Home() {
   const randomNumber = useRandomPokemonId();
