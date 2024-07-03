@@ -51,7 +51,7 @@ const PokemonDetail = () => {
         </Box>
         <PokemonStatsChart stats={pokemon.stats} />
         {pokemon && pokemon.resistances && (
-          <Box display="flex" gap={2} pt={2}>
+          <Box display="flex" gap={2} p={2}>
             <PokemonResistances
               resistances={pokemon.resistances}
               name={pokemon.name.fr}
