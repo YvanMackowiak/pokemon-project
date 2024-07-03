@@ -1,16 +1,21 @@
-import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Box, List, ListItem, Typography } from "@mui/material";
 import Image from "next/image";
 import { Resistances } from "../types/pokemon";
 
 interface PokemonResistancesProps {
   resistances: Resistances[];
   name: string;
+  res?: boolean;
 }
 
-const PokemonResistances = ({ resistances, name }: PokemonResistancesProps) => {
+const PokemonResistances = ({
+  resistances,
+  name,
+  res,
+}: PokemonResistancesProps) => {
   // Filtrer les résistances où le multiplicateur est supérieur à 1
-  const filteredResistances = resistances.filter(
-    (resistance) => resistance.multiplier > 1
+  const filteredResistances = resistances.filter((resistance) =>
+    res ? resistance.multiplier < 1 : resistance.multiplier > 1
   );
 
   const getLogoPath = (name: string) => {
@@ -65,27 +70,34 @@ const PokemonResistances = ({ resistances, name }: PokemonResistancesProps) => {
       })}
     >
       <Typography variant="h6" gutterBottom>
-        Faiblesses de {name}
+        {res ? `Résistances de ${name}` : `Faiblesses de ${name}`}
       </Typography>
-      <List sx={{ display: "flex" }}>
+      <List sx={{ display: "flex", flexWrap: "wrap" }}>
         {filteredResistances.map((resistance, index) => (
-          <ListItem key={index} sx={{ display: "flex", alignItems: "center" }}>
+          <ListItem
+            key={index}
+            sx={{ display: "flex", alignItems: "center", width: "auto", mx: 1 }}
+          >
             <Image
               src={getLogoPath(resistance.name)}
               alt={resistance.name}
               width={32}
               height={32}
             />
-            <ListItemText
-              primary={resistance.name}
-              secondary={`Multiplicateur: ${resistance.multiplier}`}
-              sx={{
-                ml: 2,
-                "& .MuiListItemText-secondary": {
-                  color: "red",
-                },
-              }}
-            />
+            <Box sx={{ ml: 2, display: "flex", alignItems: "center" }}>
+              <Typography component="span" variant="body2">
+                {resistance.name}
+              </Typography>
+              <Typography
+                component="span"
+                variant="body2"
+                sx={{ ml: 1, color: res ? "green" : "red" }}
+              >
+                {resistance.multiplier === 0
+                  ? " (immuniser)"
+                  : ` (Multiplicateur: ${resistance.multiplier})`}
+              </Typography>
+            </Box>
           </ListItem>
         ))}
       </List>
