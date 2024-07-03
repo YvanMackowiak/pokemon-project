@@ -1,6 +1,6 @@
 // src/server.ts
-import express from "express";
 import cors from "cors";
+import express from "express";
 import pokemonRoutes from "./routes/pokemon";
 import pokemonAllRoutes from "./routes/pokemonAll";
 

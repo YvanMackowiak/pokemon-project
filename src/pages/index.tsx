@@ -1,5 +1,6 @@
 "use client";
 
+import { usePoekmon } from "@/hooks/usePokemon";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import pokemonImage from "../../public/assets/evolution.jpg";
@@ -9,7 +10,12 @@ import { useRandomPokemonId } from "../hooks/useRandomPokemonId";
 export default function Home() {
   const randomNumber = useRandomPokemonId();
   const randomNumberTwo = useRandomPokemonId();
-
+  const { error, loading, pokemon } = usePoekmon(randomNumber);
+  const {
+    error: errorTwo,
+    loading: loadingTwo,
+    pokemon: pokemonTwo,
+  } = usePoekmon(randomNumberTwo);
   return (
     <Box sx={{}}>
       <Box
@@ -81,8 +87,12 @@ export default function Home() {
         alignItems="center"
         m="auto"
       >
-        <PokemonList pokedexId={randomNumber} />
-        <PokemonList pokedexId={randomNumberTwo} />
+        <PokemonList pokemon={pokemon} error={error} loading={loading} />
+        <PokemonList
+          pokemon={pokemonTwo}
+          error={errorTwo}
+          loading={loadingTwo}
+        />
       </Box>
     </Box>
   );

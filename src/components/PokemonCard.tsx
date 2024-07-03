@@ -1,59 +1,45 @@
+import { Pokemon } from "@/types/pokemon";
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
-import axios from "axios";
+import { useRouter } from "next/dist/client/components/navigation";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import Female from "../../public/assets/Female.png";
 import Male from "../../public/assets/Male.png";
-import { Pokemon } from "../types/pokemon";
 
 interface Props {
-  pokedexId: number;
+  pokemon: Pokemon | null;
+  loading?: boolean;
+  error: string | null;
 }
 
-const PokemonList = ({ pokedexId }: Props) => {
-  const [pokemon, setPokemon] = useState<Pokemon | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchPokemon = async () => {
-      try {
-        const res = await axios.get<Pokemon>(
-          `http://localhost:3001/api/pokemon/${pokedexId}`
-        );
-        setPokemon(res.data);
-        setLoading(false);
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          setError(err.message);
-        } else {
-          setError("An unexpected error occurred");
-        }
-        setLoading(false);
-      }
-    };
-
-    fetchPokemon();
-  }, [pokedexId]);
+const PokemonList = ({ pokemon, error, loading }: Props) => {
+  const router = useRouter();
 
   if (loading) return <CircularProgress />;
   if (error)
     return <Typography color="error">Error fetching data: {error}</Typography>;
   if (!pokemon) return <Typography>No data</Typography>;
 
+  const handleBoxClick = () => {
+    router.push(`/pokemon/${pokemon.pokedex_id}`);
+  };
+
   return (
     <Box
+      onClick={handleBoxClick}
       sx={(t) => ({
         border: 1,
         borderColor: "grey.500",
         borderRadius: 4,
         width: 200,
-        position: "relative",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         p: 2,
         backgroundColor: t.palette.background.paper,
+        ":hover": {
+          cursor: "pointer",
+          backgroundColor: t.palette.background.default,
+        },
       })}
     >
       <Box
