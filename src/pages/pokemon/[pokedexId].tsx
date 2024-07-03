@@ -1,10 +1,15 @@
 import PokemonStatsChart from "@/components/BarChart";
+import { PokemonCharacteristics } from "@/components/PokemonCharacteristics";
+import PokemonResistances from "@/components/PokemonResistance";
 import { usePoekmon } from "@/hooks/usePokemon";
-import FemaleIcon from "@mui/icons-material/Female";
-import MaleIcon from "@mui/icons-material/Male";
+import { Pokemon } from "@/types/pokemon";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
+
+export interface PokemonCharacteristicsProps {
+  pokemon: Pokemon;
+}
 
 const PokemonDetail = () => {
   const router = useRouter();
@@ -42,39 +47,15 @@ const PokemonDetail = () => {
               priority
             />
           </Box>
-          <Box
-            marginTop="auto"
-            sx={(t) => ({
-              backgroundColor: t.palette.background.paper,
-              p: 2,
-              borderRadius: 4,
-            })}
-          >
-            <Typography>Taille {pokemon.height}</Typography>
-            <Typography>Poids {pokemon.weight}</Typography>
-            <Typography display="flex">
-              {pokemon.sexe?.female}
-              <FemaleIcon /> <MaleIcon />
-              {pokemon.sexe?.male}
-            </Typography>
-            <Typography>Cathégorie {pokemon.category}</Typography>
-            <Typography display="flex" gap={0.5}>
-              Talent
-              {pokemon.talents?.map((t) => (
-                <Typography pr={0.5}>{t.name}</Typography>
-              ))}
-            </Typography>
-            {pokemon.talents && pokemon.talents[0].tc && (
-              <Typography display="flex" gap={0.5}>
-                Talent caché
-                {pokemon.talents?.map((t) => (
-                  <Typography pr={0.5}>{t.tc}</Typography>
-                ))}
-              </Typography>
-            )}
-          </Box>
+          <PokemonCharacteristics pokemon={pokemon} />
         </Box>
         <PokemonStatsChart stats={pokemon.stats} />
+        {pokemon && pokemon.resistances && (
+          <PokemonResistances
+            resistances={pokemon.resistances}
+            name={pokemon.name.fr}
+          />
+        )}
       </Box>
     )
   );
